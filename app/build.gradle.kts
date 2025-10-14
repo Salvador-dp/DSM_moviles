@@ -46,5 +46,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation("com.airbnb.android:lottie:$lottieVersion") //Para las dependencias
+    implementation("com.airbnb.android:lottie:6.1.0") //Para las dependencias
 }
