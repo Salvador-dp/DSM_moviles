@@ -9,6 +9,10 @@ android {
         version = release(36)
     }
 
+    buildFeatures{
+        viewBinding=true
+    }
+
     defaultConfig {
         applicationId = "com.example.weatherapp"
         minSdk = 24
@@ -47,4 +51,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("com.airbnb.android:lottie:6.1.0") //Para las dependencias
+    //retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    //GSON converter
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 }
