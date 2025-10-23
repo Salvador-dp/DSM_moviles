@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.`SearchView$InspectionCompanion`
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.weatherapp.databinding.ActivityMainBinding
@@ -20,6 +19,10 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+
+
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -28,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
+        Log.d("DEBUG", "MainActivity started")
         fetchWeatherData("Jaipur") //El nombre de la city XD
         SearchCity()
 
@@ -54,56 +58,77 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun fetchWeatherData(city_name:String) {
+    private fun fetchWeatherData(city_name: String) {
+        Log.d("DEBUG", "fetchWeatherData called for $city_name")
+
+        val logging = HttpLoggingInterceptor { message ->
+            Log.d("API_LOG", message)
+        }
+        logging.level = HttpLoggingInterceptor.Level.BODY
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(logging)
+            .build()
+
         val retrofit = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
             .baseUrl("https://api.openweathermap.org/data/2.5/")
-            .build().create(ApiInterface::class.java)
-        val response =
-            retrofit.getWeatherData(city_name, "2553a908ba48d63dd91ba765c83cacad", "metric")
-        response.enqueue(object : Callback<WeatherApp> {
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+            .create(ApiInterface::class.java)
+
+        val call = retrofit.getWeatherData(
+            city_name,
+            "2553a908ba48d63dd91ba765c83cacad",
+            "metric"
+        )
+
+        call.enqueue(object : Callback<WeatherApp> {
             override fun onResponse(call: Call<WeatherApp>, response: Response<WeatherApp>) {
-                Log.d("event", "got response")
-                val responseBody = response.body()
-                if (response.isSuccessful && responseBody != null) {
-                    val temperature = responseBody.main.temp.toString()
-                    val humidity = responseBody.main.humidity.toString()
-                    val windSpeed = responseBody.wind.speed
-                    val sunRise = responseBody.sys.sunrise.toLong()
-                    val sunSet = responseBody.sys.sunset.toLong()
-                    val seaLevel = responseBody.main.pressure
-                    val condition = responseBody.weather.firstOrNull()?.main ?: "unknown"
-                    val maxTemp = responseBody.main.temp_max
-                    val minTemp = responseBody.main.temp_min
+                if (response.isSuccessful && response.body() != null) {
+                    val data = response.body()!!
+                    Log.d("API_RESPONSE", "✅ Data OK: Temp=${data.main.temp}, City=$city_name")
+
+                    // -------------------------------
+                    // ACTUALIZAR UI AQUÍ 👇
+                    // -------------------------------
+                    val temperature = data.main.temp.toString()
+                    val humidity = data.main.humidity.toString()
+                    val windSpeed = data.wind.speed
+                    val sunRise = data.sys.sunrise.toLong()
+                    val sunSet = data.sys.sunset.toLong()
+                    val seaLevel = data.main.pressure
+                    val condition = data.weather.firstOrNull()?.main ?: "Unknown"
+                    val maxTemp = data.main.temp_max
+                    val minTemp = data.main.temp_min
 
                     binding.temp.text = "$temperature °C"
-                    binding.weather.text = "$condition"
-                    binding.maxTemp.text = "Max Temp: $maxTemp °C"
-                    binding.minTemp.text = "Min Temp: $minTemp °C"
+                    binding.weather.text = condition
+                    binding.maxTemp.text = "Max: $maxTemp °C"
+                    binding.minTemp.text = "Min: $minTemp °C"
                     binding.humidity.text = "$humidity %"
                     binding.windSpeed.text = "$windSpeed m/s"
-                    binding.sunrise.text = "${time(sunRise)}"
-                    binding.sunset.text = "${time(sunSet)}"
+                    binding.sunrise.text = time(sunRise)
+                    binding.sunset.text = time(sunSet)
                     binding.sea.text = "$seaLevel hpa"
                     binding.condition.text = condition
-                    binding.day.text =dayName(System.currentTimeMillis())
-                        binding.date.text =date()
-                        binding.cityName.text = "$city_name"
+                    binding.cityName.text = city_name
+                    binding.day.text = dayName(System.currentTimeMillis())
+                    binding.date.text = date()
+
                     changeIMagesAccordingToWeatherCondition(condition)
-
-                    Log.d("TAG", "onResponse: ${temperature.toString()}")
+                    // -------------------------------
+                } else {
+                    val errBody = response.errorBody()?.string()
+                    Log.e("API_ERROR", "❌ Code=${response.code()}, Body=$errBody")
                 }
-
             }
-
 
             override fun onFailure(call: Call<WeatherApp>, t: Throwable) {
-                Log.d("event", "failure ${t.toString()}")
+                Log.e("API_FAILURE", "🚨 Error=${t.message}")
             }
-
         })
     }
-
     private fun changeIMagesAccordingToWeatherCondition(conditions:String) {
         when(conditions){
 
