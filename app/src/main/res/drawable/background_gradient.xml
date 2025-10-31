@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Un degradado de blanco a un gris muy claro, dando un efecto 3D sutil -->
+    <gradient
+        android:angle="270"
+        android:startColor="#FFFFFF"
+        android:centerColor="#F5F5F5"
+        android:endColor="#E0E0E0"
+        android:type="linear" />
+
+    <!-- Bordes redondeados para el estilo moderno -->
+    <corners android:radius="20dp" />
+</shape>

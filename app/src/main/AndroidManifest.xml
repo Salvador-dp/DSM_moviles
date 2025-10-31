@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- ⚠️ Permite el tráfico HTTP si usas HTTP, pero tú ya cambiaste a HTTPS,
+         así que esto no es estrictamente necesario, pero lo dejo como buena práctica si fallara el HTTPS. -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -13,19 +19,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WeatherApp"
         tools:targetApi="31">
+
+        <!-- 1. LOGIN ACTIVITY - PANTALLA DE INICIO -->
         <activity
-            android:name=".SplashActivity"
-            android:exported="true" >
+            android:name=".LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 2. SPLASH ACTIVITY (Ya no es el LAUNCHER, pero se mantiene) -->
+        <activity
+            android:name=".SplashActivity"
+            android:exported="false">
+            <!-- ⚠️ QUITAR el intent-filter de LAUNCHER de aquí -->
+        </activity>
+
+        <!-- 3. MAIN ACTIVITY -->
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>

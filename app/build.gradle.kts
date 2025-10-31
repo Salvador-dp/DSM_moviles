@@ -1,16 +1,16 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+
+    id("com.google.gms.google-services")
 }
 
 android {
     namespace = "com.example.weatherapp"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
 
-    buildFeatures{
-        viewBinding=true
+    buildFeatures {
+        viewBinding = true
     }
 
     defaultConfig {
@@ -42,17 +42,36 @@ android {
 }
 
 dependencies {
+    // --- Dependencias de AndroidX/Material (Manteniendo tu sintaxis 'libs') ---
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    // --- Dependencias de Testing ---
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation("com.airbnb.android:lottie:6.1.0") //Para las dependencias
-    //retrofit
+
+    // --- DEPENDENCIAS DE FIREBASE (¡Corregidas!) ---
+    // ⚠️ ATENCIÓN: Solo debes usar una vez la plataforma BOM.
+    // Usamos la versión más reciente (32.7.0) que tenías
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+
+    // Core Firebase (ya incluye Analytics si usas la BOM)
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
+    // --- DEPENDENCIAS DE CLIMA y LOTTIE ---
+    // Lottie (manteniendo tu versión)
+    implementation("com.airbnb.android:lottie:6.7.0")
+
+    // Retrofit y GSON
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    //GSON converter
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // OkHttp y Logging Interceptor
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 }

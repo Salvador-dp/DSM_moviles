@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/merriweathersans_bold"
-        android:text="Today"
+        android:text="Hoy"
         android:textColor="@color/black"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -185,7 +185,7 @@
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/merriweathersans_medium"
                     android:gravity="center"
-                    android:text="Humidity"
+                    android:text="Humedad"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -220,7 +220,7 @@
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/merriweathersans_medium"
                     android:gravity="center"
-                    android:text="Wind Speed"
+                    android:text="Velocidad del viento"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -256,7 +256,7 @@
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/merriweathersans_medium"
                     android:gravity="center"
-                    android:text="Condition"
+                    android:text="Condición"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -291,7 +291,7 @@
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/merriweathersans_medium"
                     android:gravity="center"
-                    android:text="Sunrise"
+                    android:text="Amanecer"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -326,7 +326,7 @@
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/merriweathersans_medium"
                     android:gravity="center"
-                    android:text="Sunset"
+                    android:text="Atardecer"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -361,7 +361,7 @@
                     android:layout_marginBottom="5dp"
                     android:fontFamily="@font/merriweathersans_medium"
                     android:gravity="center"
-                    android:text="Sea"
+                    android:text="Nivel del mar"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -389,7 +389,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="24dp"
         android:gravity="center"
-        android:text="DESIGN BY \n Snehal Dubey"
+        android:text="DSM_Catedra"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
