@@ -19,3 +19,6 @@ https://www.figma.com/design/5kvSwLXEWXmwqXMNsLkJks/Untitled?node-id=0-1&t=uBLMX
 
 Link 🔥 Firebase Console (por si acaso)
 https://console.firebase.google.com/project/logindsm-b4fea/authentication/users?hl=es-419
+
+Link App descargar: (para que sea mas facil correrla)
+https://drive.google.com/file/d/19mdOJkCIe1Xq4qgo0gbjOn6FeXx2BG1P/view?usp=sharing
